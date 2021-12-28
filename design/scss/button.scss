@@ -1,0 +1,18 @@
+.main-div {
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  .primary__button {
+    width: 150px;
+    font-size: 15pt;
+    background-color: #e5e5e5;
+    border: 0;
+    border-left: 1px solid;
+    cursor: pointer;
+  }
+  :first-child {
+    .primary__button {
+      border-left: 0 !important;
+    }
+  }
+}
