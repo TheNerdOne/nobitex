@@ -20,7 +20,7 @@
     </div>
 
     <div class="nav-links">
-      <NuxtLink event="" to="/game">بازی</NuxtLink>
+      <NuxtLink :event="userToken ? 'click' : ''" to="/game">بازی</NuxtLink>
       <NuxtLink to="/prices">قیمت لحظه‌ای</NuxtLink>
       <NuxtLink to="/">خانه</NuxtLink>
     </div>
@@ -63,6 +63,9 @@ export default {
       if (this.userToken) {
         this.removeUserToken();
         localStorage.removeItem("Token");
+        if (this.$route.fullPath === "/game") {
+          this.$router.push({ path: "/" });
+        }
       } else {
         this.setShowAuthModal(true);
       }
