@@ -1,0 +1,10 @@
+.title {
+  font-size: 15px;
+}
+::v-deep .btn-block {
+  + {
+    .btn-block {
+        margin: 0 !important;
+    }
+  }
+}
