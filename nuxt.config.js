@@ -1,3 +1,4 @@
+import { API_URL } from './config/HTTP'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,11 +19,11 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~design/scss/global.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ['~/plugins/globals.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,9 +34,19 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    'bootstrap-vue/nuxt'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  axios: {
+    baseURL: API_URL,
+    proxyHeaders: false,
+    credentials: false // Used as fallback if no runtime config is provided
+  },
+  server: {
+    port: 4000 // default: 3000
   }
 }
