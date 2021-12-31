@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Home from "./home";
+import Home from "@/components/home";
 export default {
   name: "IndexPage",
   components: {
@@ -11,4 +11,6 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import "../../design/scss/button";
+</style>
