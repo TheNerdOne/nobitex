@@ -23,7 +23,7 @@
       <span>{{ commafy(data.item.latest) }}</span>
     </template>
     <template #cell(dayChange)="data">
-      <span>{{ data.item.dayChange }} %</span>
+      <span :class="data.item.higherChange && 'text-success'">{{ data.item.dayChange }} %</span>
     </template>
   </b-table>
 </template>
