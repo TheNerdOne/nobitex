@@ -1,7 +1,7 @@
 <template>
   <Navbar>
     <b-overlay :show="showTable" rounded="sm">
-      <Table :items="this.coinsData" />
+      <Table :items="this.coinsData" v-if="!showTable" :key="tableKey" />
     </b-overlay>
   </Navbar>
 </template>
@@ -19,6 +19,7 @@ export default {
       dstCurrency: 1, //1 => rls 0 => usdt
       showTable: false,
       killGetPrice: null,
+      tableKey:0
     };
   },
   computed: {
@@ -36,9 +37,11 @@ export default {
       priceDataProvider
         .getCoinDetail(payload)
         .then((res) => {
+          console.log('salam 1')
           this.seprateKeyValue(res.data.stats);
         })
         .then(() => {
+          console.log('salam 2')
             this.mostChangeInDay(this.coinsData);
         })
         .then(() => {
