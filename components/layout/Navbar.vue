@@ -24,10 +24,12 @@
               >قیمت لحظه‌ای</NuxtLink
             ></b-nav-item
           >
-          <NuxtLink to="/game">
-            <!-- we should use middlewares but I'm sorry I can't wrote it because I'm too busy with my current job -->
-            <b-nav-item :disabled="!hasAccess"> بازی </b-nav-item>
-          </NuxtLink>
+          <b-nav-item>
+            <NuxtLink class="text-light" to="/game">
+              <!-- we should use middlewares but I'm sorry I can't wrote it because I'm too busy with my current job -->
+              بازی
+            </NuxtLink>
+          </b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="profileData">
@@ -37,7 +39,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <slot v-if="hasAccess">
+    <slot>
       <router-view></router-view>
     </slot>
     <Modal
@@ -112,10 +114,10 @@ export default {
     },
   },
   mounted() {
-    if (AUTH.getToken() === null) {
-      this.hasAccess = false;
-      this.$router.push({ path: "/" });
-    }
+    // if (AUTH.getToken() === null) {
+    //   this.hasAccess = false;
+    //   this.$router.push({ path: "/" });
+    // }
   },
 };
 </script>
