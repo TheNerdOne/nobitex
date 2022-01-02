@@ -15,6 +15,9 @@
       <div class="w-100">
         <CustomInput @input="tokenValue = $event" />
       </div>
+      <div v-if="message" class="w-100 text-center text-danger my-3">
+        {{ message }}
+      </div>
       <div class="mt-3 float-right w-100">
         <div class="d-flex align-items-center justify-content-between">
           <b-button class="col-5" variant="secondary" block @click="closeModal"
@@ -33,6 +36,11 @@
 import CustomInput from "./CustomInput.vue";
 export default {
   components: { CustomInput },
+  props: {
+    message: {
+      type: String,
+    },
+  },
   data() {
     return {
       tokenValue: "",

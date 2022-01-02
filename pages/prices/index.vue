@@ -37,11 +37,9 @@ export default {
       priceDataProvider
         .getCoinDetail(payload)
         .then((res) => {
-          console.log('salam 1')
           this.seprateKeyValue(res.data.stats);
         })
         .then(() => {
-          console.log('salam 2')
             this.mostChangeInDay(this.coinsData);
         })
         .then(() => {
