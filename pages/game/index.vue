@@ -36,8 +36,11 @@
 <script>
 import CustomInput from "../../components/common/CustomInput.vue";
 import Navbar from "../../components/layout/Navbar.vue";
+import pageAccess from "@/utils/pageAccess";
+
 export default {
   components: { CustomInput, Navbar },
+  mixins:[pageAccess],
   data() {
     return {
       counter: 0,
