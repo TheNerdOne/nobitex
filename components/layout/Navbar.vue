@@ -24,7 +24,7 @@
               >قیمت لحظه‌ای</NuxtLink
             ></b-nav-item
           >
-          <NuxtLink :to="`${hasAccess ? '/game' : ''}`">
+          <NuxtLink to="/game">
             <!-- we should use middlewares but I'm sorry I can't wrote it because I'm too busy with my current job -->
             <b-nav-item :disabled="!hasAccess"> بازی </b-nav-item>
           </NuxtLink>
