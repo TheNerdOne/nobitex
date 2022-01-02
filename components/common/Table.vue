@@ -23,9 +23,7 @@
       <span>{{ commafy(data.item.latest) }}</span>
     </template>
     <template #cell(dayChange)="data">
-      <span v-if="data.item.higherChange" class="text-success"
-        >{{ data.item.dayChange }} %</span
-      >
+      <span v-if="data.item.higherChange" class="text-success">{{ data.item.dayChange }} %</span>
       <span v-else>{{ data.item.dayChange }} %</span>
     </template>
   </b-table>
