@@ -5,13 +5,14 @@ export default {
             hasAccess: false,
         }
     },
-    mixins:[authMixin],
+    mixins: [authMixin],
     beforeMount() {
-        const route = this.$route.path
-        if (this.userToken !== null && route ==='game') {
-            return true
+        const route = this.$route.fullPath
+        if (this.userToken === null && route === '/game') {
+            this.hasAccess = false
+            this.$router.push({ path: '/' })
         } else {
-            return false
+            this.hasAccess = true
         }
     },
 }
