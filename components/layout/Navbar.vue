@@ -1,34 +1,50 @@
 <template>
-  <div class="nav">
-    <input type="checkbox" id="nav-check" />
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-nav>
+        <b-nav-form>
+          <b-button
+            class="cursor-pointer"
+            :key="loginBtnKey"
+            @click="showModalFunc"
+          >
+            {{ userToken ? "خروج" : "ورود" }}
+          </b-button>
+        </b-nav-form>
+      </b-navbar-nav>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <div class="nav-header">
-      <div
-        class="nav-title cursor-pointer"
-        :key="loginBtnKey"
-        @click="showModalFunc"
-      >
-        {{ userToken ? "خروج" : "ورود" }}
-      </div>
-    </div>
-    <div class="nav-btn">
-      <label for="nav-check">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-    </div>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item>
+            <NuxtLink class="text-light" to="/">خانه</NuxtLink></b-nav-item
+          >
+          <b-nav-item>
+            <NuxtLink class="text-light" to="/prices"
+              >قیمت لحظه‌ای</NuxtLink
+            ></b-nav-item
+          >
+          <b-nav-item disabled>
+            <NuxtLink class="text-light" to="/game">بازی</NuxtLink></b-nav-item
+          >
+        </b-navbar-nav>
 
-    <div class="nav-links">
-      <NuxtLink :event="userToken ? 'click' : ''" to="/game">بازی</NuxtLink>
-      <NuxtLink to="/prices">قیمت لحظه‌ای</NuxtLink>
-      <NuxtLink to="/">خانه</NuxtLink>
-    </div>
-
+        <b-navbar-nav class="ml-auto" v-if="profileData">
+          <b-nav-item>
+            {{ `${profileData.firstName} ${profileData.lastName}` }}</b-nav-item
+          ><b-nav-item> {{ profileData.email }}</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <slot>
       <router-view></router-view>
     </slot>
-    <Modal v-if="authModal" :key="authModalKey" @token="setTokenForAuth" />
+    <Modal
+      v-if="authModal"
+      :key="authModalKey"
+      @token="setTokenForAuth"
+      :message="authErrMessage"
+    />
   </div>
 </template>
 
@@ -37,6 +53,7 @@ import Button from "../common/Button.vue";
 import Modal from "@/components/common/modal.vue";
 import API from "@/services/api";
 import AUTH from "@/services/auth";
+import idpDataProvider from "@/services/idp";
 import authMixin from "@/utils/mixins/";
 export default {
   mixins: [authMixin],
@@ -46,6 +63,7 @@ export default {
       loginBtnKey: 0,
       authModalKey: 1,
       showModal: false,
+      authErrMessage: "",
     };
   },
   computed: {
@@ -61,8 +79,7 @@ export default {
   methods: {
     showModalFunc() {
       if (this.userToken) {
-        this.removeUserToken();
-        localStorage.removeItem("Token");
+        this.removeAuth();
         if (this.$route.fullPath === "/game") {
           this.$router.push({ path: "/" });
         }
@@ -70,11 +87,26 @@ export default {
         this.setShowAuthModal(true);
       }
     },
+    removeAuth() {
+      this.removeUserToken();
+      this.removeUserProfile();
+      localStorage.removeItem("Token");
+    },
     setTokenForAuth(token) {
       AUTH.setToken(token);
       API.addAuthorizationHeader();
-      this.setUserToken(token);
-      this.setShowAuthModal(false);
+      idpDataProvider
+        .getUserInfo()
+        .then((res) => {
+          this.setUserProfile(res.data.profile).then(() => {
+            this.setUserToken(token);
+            this.setShowAuthModal(false);
+          });
+        })
+        .catch((err) => {
+          this.removeAuth();
+          this.authErrMessage = err.response.data.detail;
+        });
     },
   },
 };
