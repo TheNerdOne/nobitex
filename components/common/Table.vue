@@ -23,7 +23,8 @@
       <span>{{ commafy(data.item.latest) }}</span>
     </template>
     <template #cell(dayChange)="data">
-      <span>{{ data.item.dayChange }} %</span>
+      <span v-if="data.item.higherChange" class="text-success">{{ data.item.dayChange }} %</span>
+      <span v-else>{{ data.item.dayChange }} %</span>
     </template>
   </b-table>
 </template>
@@ -86,9 +87,9 @@ export default {
         };
       }
     },
-    commafy(payload){
-        return Number(payload).toLocaleString()
-    }
+    commafy(payload) {
+      return Number(payload).toLocaleString();
+    },
   },
 };
 </script>
