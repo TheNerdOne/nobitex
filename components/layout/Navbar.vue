@@ -81,6 +81,14 @@ export default {
     },
   },
   methods: {
+    authChecker() {
+      let userToken;
+      userToken = AUTH.getToken();
+      if (userToken) {
+        this.setUserToken(userToken);
+        this.hasAuth = true;
+      }
+    },
     showModalFunc() {
       if (this.userToken) {
         this.removeAuth();
@@ -114,10 +122,7 @@ export default {
     },
   },
   mounted() {
-    // if (AUTH.getToken() === null) {
-    //   this.hasAccess = false;
-    //   this.$router.push({ path: "/" });
-    // }
+    this.authChecker();
   },
 };
 </script>

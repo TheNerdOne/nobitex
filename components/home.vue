@@ -24,14 +24,7 @@ export default {
   },
   computed: {},
   methods: {
-    authChecker() {
-      let userToken;
-      userToken = AUTH.getToken();
-      if (userToken) {
-        this.setUserToken(userToken);
-        this.hasAuth = true;
-      }
-    },
+   
     setTokenForAuth(token) {
       AUTH.setToken(token);
       API.addAuthorizationHeader();
@@ -41,7 +34,7 @@ export default {
   },
 
   mounted() {
-    this.authChecker();
+   
   },
 };
 </script>
