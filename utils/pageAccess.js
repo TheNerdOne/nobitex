@@ -1,18 +1,17 @@
-import authMixin from './mixins'
+import AUTH from '@/services/auth'
 export default {
     data() {
         return {
             hasAccess: false,
         }
     },
-    mixins: [authMixin],
     beforeMount() {
         const route = this.$route.fullPath
-        if (this.userToken === null && route === '/game') {
+        if (AUTH.getToken() !== null) {
+            this.hasAccess = true
+        } else if (route === '/game') {
             this.hasAccess = false
             this.$router.push({ path: '/' })
-        } else {
-            this.hasAccess = true
         }
     },
 }
